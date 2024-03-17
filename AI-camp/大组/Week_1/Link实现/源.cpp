@@ -33,8 +33,8 @@ void ParitySwap(NodeOneList* singleList);
 void FindCenterPoint(NodeOneList* singleList);
 //判断循环
 void SingleIsLoop(NodeOneList* singleList);
-//链表反转(不会....)
-void ConvertSingleList(NodeOne* temp1, NodeOne* temp2);
+//链表反转
+void ConvertSingleList(NodeOneList* singleList);
 void DoubleIsLoop(NodeTwoList* doubleList);
 void ConvertDoubleList(NodeTwoList* doubleList);
 
@@ -206,11 +206,12 @@ void SingleListMenu(NodeOneList* singleList) {
                 SingleIsLoop(singleList);
                 break;
             case '4':
-                ConvertSingleList(*singleList,(*singleList)->next);
+                ConvertSingleList(singleList);
                 break;
             case '5':
                 printf("退出成功\n");
                 system("pause");
+                while (getchar() != '\n');
                 return;
         }
     }
@@ -240,6 +241,7 @@ void DoubleListMenu(NodeTwoList* doubleList) {
             case '3':
                 printf("退出成功\n");
                 system("pause");
+                while (getchar() != '\n');
                 return;
         }
     }
@@ -251,17 +253,18 @@ void ParitySwap(NodeOneList* singleList) {
     PrintSingleList(singleList);
     NodeOne* odd = (*singleList)->next, * even = odd->next;
 
-    // 交换奇数位置节点和偶数位置节点的值
-    int temp = odd->num;
-    odd->num = even->num;
-    even->num = temp;
     while (even != NULL && even->next != NULL) {
+
+        int temp = odd->num;
+        odd->num = even->num;
+        even->num = temp;
 
         // 更新奇数位置节点
         odd = odd->next->next;
         // 更新偶数位置节点
         even = even->next->next;
-        // 交换奇数位置节点和偶数位置节点的值
+    }
+    if (even) {
         int temp = odd->num;
         odd->num = even->num;
         even->num = temp;
@@ -317,13 +320,18 @@ void SingleIsLoop(NodeOneList* singleList) {
     system("pause");
 }
 
-void ConvertSingleList(NodeOne* temp1,NodeOne *temp2) {
-    //以下是草稿....
-    //if(temp2->next)
-    //    ConvertSingleList(temp1->next, temp2->next);
-    //else
-    //    temp2->next = temp1;
-    printf("这题不会做.....");
+void ConvertSingleList(NodeOneList* singleList) {
+    NodeOne* pre = NULL, * current = NULL, * next = NULL;
+    current = (*singleList)->next;
+    while (current) {
+        next = current->next;
+        current->next = pre;
+        pre = current;
+        current = next;
+    }
+
+    (*singleList)->next = pre;
+    PrintSingleList(singleList);
     system("pause");
 }
 
@@ -350,6 +358,18 @@ void DoubleIsLoop(NodeTwoList* doubleList) {
 }
 
 void ConvertDoubleList(NodeTwoList* doubleList) {
-    printf("这题不会做.....");
+    printf("反转之前:");
+    PrintDoubleList(doubleList);
+    NodeTwo* pre = NULL, * current = NULL, * next = NULL;
+    current = (*doubleList)->next;
+    while (current) {
+        next = current->next;
+        current->next = pre;
+        pre = current;
+        current = next;
+    }
+    (*doubleList)->next = pre;
+    printf("\n反转之后：");
+    PrintDoubleList(doubleList);
     system("pause");
 }

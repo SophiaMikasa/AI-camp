@@ -66,6 +66,7 @@ void CalculateMenu(void) {
 		printf("这是个计算器\n");
 		printf("===============================================================\n");
 		printf("请输入表达式(再任意地方输入任意非数字或者非运算符号则退出计算):\n");
+		printf("暂时不支持输入小数运算,但是可输出小数\n");
 		scanf_s("%s", temp, (unsigned)_countof(temp));
 		for (int i = 0; temp[i]!='\0'; i++) {
 			if (temp[i] >= '0' && temp[i] <= '9')
@@ -193,7 +194,7 @@ void QueueMenu(void) {
 		printf("1.出队\n");
 		printf("2.入队\n");
 		printf("3.销毁队列\n");
-		//printf("4.输出整个队列\n");
+		printf("4.输出整个队列\n");
 		printf("5.退出\n");
 		printf("=====================\n");
 		scanf_s("%c", &choice, 1);
@@ -210,9 +211,9 @@ void QueueMenu(void) {
 			case '3':
 				DestroyQueue(&QList);
 				break;
-			//case '4':
-			//	PrintQueue(&QList);
-			//	break;
+			case '4':
+				PrintQueue(&QList);
+				break;
 			case '5':
 				printf("退出成功\n");
 				system("pause");
